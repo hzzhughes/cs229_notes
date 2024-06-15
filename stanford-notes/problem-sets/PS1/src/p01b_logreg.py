@@ -15,6 +15,9 @@ def main(train_path, eval_path, pred_path):
     x_train, y_train = util.load_dataset(train_path, add_intercept=True)
 
     # *** START CODE HERE ***
+    clf=LogisticRegression()
+    clf.fit(x_train, y_train)
+    print(f'theta={clf.theta}')
     # *** END CODE HERE ***
 
 
@@ -35,6 +38,17 @@ class LogisticRegression(LinearModel):
             y: Training example labels. Shape (m,).
         """
         # *** START CODE HERE ***
+        def g(z):
+            return 1/(1+np.exp(-z))
+        m,n=x.shape
+        theta=np.zeros(n)
+        delta_theta=np.ones(n)
+        while np.linalg.norm(delta_theta,1)>=1e-5:
+            H=sum(g(x_i@theta)*(1-g(x_i@theta))*x_i.reshape(n,1)@x_i.reshape(1,n) for x_i in x)/m
+            grad=-(y-g(x@theta))@x/m
+            delta_theta=-np.linalg.inv(H)@grad
+            theta+=delta_theta
+        self.theta=theta
         # *** END CODE HERE ***
 
     def predict(self, x):
@@ -47,4 +61,9 @@ class LogisticRegression(LinearModel):
             Outputs of shape (m,).
         """
         # *** START CODE HERE ***
+        def g(z):
+            return 1/(1+np.exp(-z))
+        return g(x@self.theta)
         # *** END CODE HERE ***
+
+main('stanford-notes/problem-sets/PS1/data/ds1_train.csv','','')
