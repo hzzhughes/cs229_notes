@@ -66,4 +66,4 @@ class LogisticRegression(LinearModel):
         return g(x@self.theta)
         # *** END CODE HERE ***
 
-main('stanford-notes/problem-sets/PS1/data/ds1_train.csv','','')
+# main('stanford-notes/problem-sets/PS1/data/ds1_train.csv','','')

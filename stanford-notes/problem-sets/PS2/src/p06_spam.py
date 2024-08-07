@@ -21,6 +21,7 @@ def get_words(message):
     """
 
     # *** START CODE HERE ***
+    return [word.lower() for word in message.split(' ') if word]
     # *** END CODE HERE ***
 
 
@@ -41,6 +42,9 @@ def create_dictionary(messages):
     """
 
     # *** START CODE HERE ***
+    word_list=get_words(messages)
+    word_set=set(word_list)
+    return {word:index for word,index in zip(word_set,range(len(word_set))) if word_list.count(word)>=5}
     # *** END CODE HERE ***
 
 

@@ -39,6 +39,15 @@ class PoissonRegression(LinearModel):
             y: Training example labels. Shape (m,).
         """
         # *** START CODE HERE ***
+        m,n=x.shape
+        theta=np.zeros(n)
+        for i in range(self.max_iter):
+            grad=(y-np.exp(x@theta))@x
+            #here we are using the gradient ascent method
+            theta+=self.step_size*grad/m
+            if np.linalg.norm(grad)<self.eps:
+                break
+        self.theta=theta
         # *** END CODE HERE ***
 
     def predict(self, x):
